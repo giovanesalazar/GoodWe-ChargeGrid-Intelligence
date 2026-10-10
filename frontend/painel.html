@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel · ChargeGrid Intelligence</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+
+  {% include 'partials/_navbar_logado.html' %}
+
+  <section class="painel-header">
+    <h1>Olá, {{ usuario.nome }}</h1>
+    <p>O que você quer fazer?</p>
+  </section>
+
+  <section class="painel-grid">
+    <a href="/minha-conta" class="painel-card">
+      <div class="card-number">01</div>
+      <h3>Minha conta</h3>
+      <p>Veja seus dados e altere sua senha.</p>
+    </a>
+
+    {% if tem_veiculo %}
+    <a href="/meus-veiculos" class="painel-card">
+      <div class="card-number">02</div>
+      <h3>Meu veículo</h3>
+      <p>Veja, edite ou remova seu veículo cadastrado.</p>
+    </a>
+    {% else %}
+    <a href="/cadastro-veiculo" class="painel-card pendente">
+      <span class="status-tag pendente">pendente</span>
+      <div class="card-number">02</div>
+      <h3>Cadastrar veículo</h3>
+      <p>Adicione seu veículo para liberar simulações de carregamento.</p>
+    </a>
+    {% endif %}
+
+    {% if tem_veiculo %}
+    <a href="/carregamento" class="painel-card">
+      <div class="card-number">03</div>
+      <h3>Fazer carregamento</h3>
+      <p>Escolha um posto, simule a sessão e finalize o pagamento.</p>
+    </a>
+    {% else %}
+    <a href="#" class="painel-card disabled">
+      <span class="status-tag em-breve">cadastre um veículo</span>
+      <div class="card-number">03</div>
+      <h3>Fazer carregamento</h3>
+      <p>Escolha um posto, simule a sessão e finalize o pagamento.</p>
+    </a>
+    {% endif %}
+
+    <a href="/historico" class="painel-card">
+      <div class="card-number">04</div>
+      <h3>Histórico</h3>
+      <p>Veja suas sessões de carregamento anteriores, com data, valor e pagamento.</p>
+    </a>
+
+    <a href="/relatorios-ia" class="painel-card">
+      <div class="card-number">05</div>
+      <h3>Relatórios &amp; IA</h3>
+      <p>Converse com o assistente sobre horários, lojas e carregadores.</p>
+    </a>
+
+    {% if usuario.vip %}
+    <a href="/vip" class="painel-card vip-card">
+      <span class="status-tag vip">VIP ativo</span>
+      <div class="card-number">06</div>
+      <h3>Você é VIP</h3>
+      <p>Acesso exclusivo ao posto de recarga mais rápido do outlet.</p>
+    </a>
+    {% else %}
+    <a href="/vip" class="painel-card pendente">
+      <span class="status-tag pendente">exclusivo</span>
+      <div class="card-number">06</div>
+      <h3>Seja VIP</h3>
+      <p>Assine e tenha acesso exclusivo ao posto de recarga mais rápido do outlet.</p>
+    </a>
+    {% endif %}
+  </section>
+
+  {% include 'partials/_footer.html' %}
+  {% include 'partials/_back_to_top.html' %}
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>

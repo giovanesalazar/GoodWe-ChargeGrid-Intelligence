@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Gestor · ChargeGrid Intelligence</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+
+  {% include 'partials/_navbar_gestor.html' %}
+
+  <section class="painel-header">
+    <h1>Painel do outlet</h1>
+    <p>Visão geral da operação de carregamento — dados agregados de todas as sessões.</p>
+  </section>
+
+  <div class="dashboard-wrapper" style="margin-bottom: 20px;">
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Receita total</div>
+        <div class="kpi-value">R$ {{ '%.2f'|format(receita_total) }}</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Sessões pagas</div>
+        <div class="kpi-value">{{ numero_sessoes_pagas }}</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Ticket médio</div>
+        <div class="kpi-value">R$ {{ '%.2f'|format(ticket_medio) }}</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Taxa de resgate de cupons</div>
+        <div class="kpi-value">{{ taxa_resgate }}%</div>
+      </div>
+    </div>
+  </div>
+
+  <section class="painel-grid">
+    <a href="/gestor/demanda" class="painel-card">
+      <div class="card-number">01</div>
+      <h3>Gestão de demanda</h3>
+      <p>Veja a ocupação dos postos por horário do dia, com o horário de pico destacado.</p>
+    </a>
+
+    <a href="/gestor/tarifacao" class="painel-card">
+      <div class="card-number">02</div>
+      <h3>Tarifação e simulador</h3>
+      <p>Veja o impacto da taxa de pico e ajuste-a de verdade, com projeção ao vivo.</p>
+    </a>
+
+    <a href="/gestor/faturamento" class="painel-card">
+      <div class="card-number">03</div>
+      <h3>Faturamento</h3>
+      <p>Receita por forma de pagamento, assinatura VIP e tipo de carregador.</p>
+    </a>
+
+    <a href="/gestor/cupons" class="painel-card">
+      <div class="card-number">04</div>
+      <h3>Cupons mais resgatados</h3>
+      <p>Ranking das lojas parceiras com mais cupons resgatados pelos clientes.</p>
+    </a>
+
+    <a href="/gestor/assistente" class="painel-card">
+      <div class="card-number">05</div>
+      <h3>Assistente do gestor</h3>
+      <p>Converse com a IA sobre os dados do outlet e receba sugestões de ação.</p>
+    </a>
+  </section>
+
+  {% include 'partials/_footer.html' %}
+  {% include 'partials/_back_to_top.html' %}
+
+  <script src="/static/js/main.js"></script>
+</body>
+
+</html>

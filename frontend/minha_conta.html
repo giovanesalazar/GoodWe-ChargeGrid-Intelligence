@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Conta · ChargeGrid Intelligence</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+
+  {% include 'partials/_navbar_logado.html' %}
+
+  <section class="painel-header">
+    <a href="/painel" class="back-link"><span class="arrow-icon">←</span> Voltar ao painel</a>
+    <h1>Minha conta</h1>
+    <p>Veja seus dados, cupons resgatados e altere sua senha quando quiser.</p>
+  </section>
+
+  <div class="account-layout">
+    <div class="detail-card">
+      <h2>Dados da conta</h2>
+      <p class="subtitle">Essas informações foram usadas no seu cadastro.</p>
+
+      <div class="detail-field">
+        <span class="field-label">Nome</span>
+        <span class="field-value">{{ usuario.nome }}</span>
+      </div>
+      <div class="detail-field">
+        <span class="field-label">Email</span>
+        <span class="field-value">{{ usuario.email }}</span>
+      </div>
+      <div class="detail-field">
+        <span class="field-label">Plano</span>
+        <span class="field-value">{{ 'VIP' if usuario.vip else 'Padrão' }}</span>
+      </div>
+      <div class="detail-field">
+        <span class="field-label">Senha</span>
+        <span class="field-value">••••••••</span>
+      </div>
+
+      <div class="section-label">ALTERAR SENHA</div>
+
+      <form id="form-senha">
+        <div class="form-group">
+          <label for="senha_atual">Senha atual</label>
+          <input type="password" id="senha_atual" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nova_senha">Nova senha</label>
+            <input type="password" id="nova_senha" required minlength="6">
+          </div>
+          <div class="form-group">
+            <label for="confirmar_nova_senha">Confirmar nova senha</label>
+            <input type="password" id="confirmar_nova_senha" required minlength="6">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full">Salvar nova senha</button>
+        <div id="mensagem" class="msg"></div>
+      </form>
+    </div>
+
+    <div class="detail-card">
+      <h2>Meus cupons</h2>
+      <p class="subtitle">Ofertas que você resgatou durante sessões de carregamento.</p>
+
+      {% if cupons %}
+        <div class="ofertas-grid" style="grid-template-columns: 1fr;">
+          {% for c in cupons %}
+          <div class="oferta-card">
+            <div class="oferta-info">
+              <div class="oferta-loja">{{ c.loja }}</div>
+              <div class="oferta-categoria">{{ c.categoria }}</div>
+              <div class="oferta-descricao">{{ c.descricao }}</div>
+              <div class="oferta-codigo">Código: {{ c.codigo }} · resgatado em {{ c.data }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="subtitle" style="margin-bottom:0;">Você ainda não resgatou nenhum cupom. Eles aparecem aqui depois que você resgatar uma oferta durante uma sessão de carregamento.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  {% include 'partials/_footer.html' %}
+  {% include 'partials/_back_to_top.html' %}
+
+  <script src="/static/js/main.js"></script>
+  <script>
+    const form = document.getElementById('form-senha');
+    const mensagem = document.getElementById('mensagem');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      mensagem.className = 'msg';
+
+      const senhaAtual = document.getElementById('senha_atual').value;
+      const novaSenha = document.getElementById('nova_senha').value;
+      const confirmarNovaSenha = document.getElementById('confirmar_nova_senha').value;
+
+      if (novaSenha !== confirmarNovaSenha) {
+        mensagem.textContent = 'As senhas não coincidem.';
+        mensagem.className = 'msg erro';
+        return;
+      }
+
+      try {
+        const resposta = await fetch('/api/conta/senha', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ senha_atual: senhaAtual, nova_senha: novaSenha }),
+        });
+        const resultado = await resposta.json();
+
+        if (!resposta.ok) {
+          mensagem.textContent = resultado.erro || 'Não foi possível alterar a senha.';
+          mensagem.className = 'msg erro';
+          return;
+        }
+
+        mensagem.textContent = resultado.mensagem;
+        mensagem.className = 'msg sucesso';
+        form.reset();
+      } catch (err) {
+        mensagem.textContent = 'Erro de conexão com o servidor.';
+        mensagem.className = 'msg erro';
+      }
+    });
+  </script>
+
+</body>
+</html>

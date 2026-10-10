@@ -1,0 +1,31 @@
+<nav class="navbar">
+  <a href="/gestor/painel" class="logo">
+    <img src="/static/img/hero_2.jpg" alt="GoodWe" class="logo-badge">
+    <span class="logo-divider"></span>
+    <span class="logo-text">ChargeGrid <span class="accent">Intelligence</span></span>
+  </a>
+
+  <div class="nav-links">
+    <a href="/gestor/painel" class="{{ 'active' if pagina_atual == 'gestor_painel' else '' }}">Painel</a>
+    <a href="/gestor/demanda" class="{{ 'active' if pagina_atual == 'gestor_demanda' else '' }}">Demanda</a>
+    <a href="/gestor/tarifacao" class="{{ 'active' if pagina_atual == 'gestor_tarifacao' else '' }}">Tarifação</a>
+    <a href="/gestor/faturamento" class="{{ 'active' if pagina_atual == 'gestor_faturamento' else '' }}">Faturamento</a>
+    <a href="/gestor/cupons" class="{{ 'active' if pagina_atual == 'gestor_cupons' else '' }}">Cupons</a>
+    <a href="/gestor/assistente" class="{{ 'active' if pagina_atual == 'gestor_assistente' else '' }}">IA</a>
+  </div>
+
+  <div class="nav-actions">
+    <span class="gestor-tag">Painel do Gestor</span>
+    <button id="btn-sair" class="btn btn-outline btn-sm">Sair</button>
+    <button class="nav-toggle" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<script>
+  document.getElementById('btn-sair').addEventListener('click', async () => {
+    await fetch('/api/logout', { method: 'POST' });
+    window.location.href = '/';
+  });
+</script>
