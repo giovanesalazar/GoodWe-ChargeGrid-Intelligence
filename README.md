@@ -6,7 +6,9 @@ Projeto do 1º ano presencial — foco no setor comercial e varejo (outlets), co
 
 🔗 **Demo ao vivo**: [fiap-challenge-goodwe-chargehub.onrender.com](https://fiap-challenge-goodwe-chargehub.onrender.com)
 
-> ⚠️ O projeto está hospedado no plano gratuito do Render. Se o site estiver "dormindo" por inatividade, o primeiro carregamento pode levar de 30 a 50 segundos. 
+> ⚠️ O projeto está hospedado no plano gratuito do Render. Se o site estiver "dormindo" por inatividade, o primeiro carregamento pode levar de 30 a 50 segundos.
+
+<img width="1916" height="905" alt="siet" src="https://github.com/user-attachments/assets/1b74bc8e-9ffb-4949-b6d6-0759998589fd" />
 
 ---
 
